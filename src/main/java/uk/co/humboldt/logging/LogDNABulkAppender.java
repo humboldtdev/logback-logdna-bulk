@@ -7,7 +7,6 @@ import ch.qos.logback.classic.spi.ThrowableProxyUtil;
 import ch.qos.logback.core.UnsynchronizedAppenderBase;
 import ch.qos.logback.core.util.InterruptUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.commons.codec.binary.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -392,7 +391,7 @@ public class LogDNABulkAppender extends UnsynchronizedAppenderBase<ILoggingEvent
         line.put("level", ev.getLevel().toString());
         line.put("app", this.appName);
         line.put("line", sb.toString());
-        Map<String,String> meta = new HashMap<>();
+        Map<String,Object> meta = new HashMap<>();
         meta.put("logger", ev.getLoggerName());
         meta.put("thread", ev.getThreadName());
         if (ev.getThrowableProxy() != null) {
@@ -401,6 +400,7 @@ public class LogDNABulkAppender extends UnsynchronizedAppenderBase<ILoggingEvent
         line.put("meta", meta);
         if (this.sendMDC)
             meta.putAll(ev.getMDCPropertyMap());
+        meta.putAll(LogDNAMeta.getAll());
 
         return line;
     }

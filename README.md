@@ -48,6 +48,19 @@ logger | Logger name
 thread | Thread name
 exception | Exception class name if present
 
+## Typed Metadata
+
+The appender supports inserting metadata via [MDC](https://logback.qos.ch/manual/mdc.html),
+ but the MDC API only takes `String` values.  As LogDNA supports numeric values and nested objects in metadata, the library adds
+a `LogDNAMeta` API, which behaves much like MDC except for the
+allowed types. These are all public static functions on the `LogDNAMeta` class:
+```java
+    void put(String key, Object value);
+    Closeable putCloseable(String key, Object value);
+    remove(String key)l
+    clear();
+``` 
+
 ## Usage
 
 The plugin is hosted by [JitPack](https://jitpack.io/), which must be added to the repositories section in `pom.xml`:
