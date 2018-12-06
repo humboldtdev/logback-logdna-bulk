@@ -57,8 +57,8 @@ allowed types. These are all public static functions on the `LogDNAMeta` class:
 ```java
     void put(String key, Object value);
     Closeable putCloseable(String key, Object value);
-    remove(String key)l
-    clear();
+    void remove(String key);
+    void clear();
 ``` 
 
 ## Usage
