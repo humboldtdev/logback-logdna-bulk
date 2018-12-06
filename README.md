@@ -32,6 +32,7 @@ sendMDC | true | Send Logback Mapped Diagnostic Context as metadata to LogDNA
 includeStacktrace | true | Include exception stack traces in log messages
 sendNow | false | Include current system time in POST to LogDNA to allow adjustment of log times
 hostname | | Set to override automatically discovered hostname.
+tags | | Set to supply tags to LogDNA. Multiple tags may be supplied as a comma separated list.
 
 ## Behaviour
 

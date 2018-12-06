@@ -7,6 +7,7 @@ import ch.qos.logback.classic.spi.ThrowableProxyUtil;
 import ch.qos.logback.core.UnsynchronizedAppenderBase;
 import ch.qos.logback.core.util.InterruptUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.codec.binary.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -169,6 +170,16 @@ public class LogDNABulkAppender extends UnsynchronizedAppenderBase<ILoggingEvent
     @SuppressWarnings("unused")
     public void setHostname(String hostname) {
         this.hostname = hostname;
+    }
+
+    private String tags;
+
+    /**
+     * Tags to send to LogDNA, comma separated
+     */
+    @SuppressWarnings("unused")
+    public void setTags(String tags) {
+        this.tags = tags;
     }
 
     /**
@@ -413,6 +424,11 @@ public class LogDNABulkAppender extends UnsynchronizedAppenderBase<ILoggingEvent
                     url.append("&now=");
                     url.append(System.currentTimeMillis());
                 }
+                if (tags != null && ! tags.trim().isEmpty()) {
+                    url.append("&tags=");
+                    url.append(encode(tags));
+                }
+
                 HttpPost post = new HttpPost(url.toString());
                 post.setHeader("User-Agent", "LogDNABulkAppender");
                 post.setHeader("apikey", apikey);
