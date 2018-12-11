@@ -335,6 +335,14 @@ public class LogDNABulkAppender extends UnsynchronizedAppenderBase<ILoggingEvent
     class Worker extends Thread {
 
         public void run() {
+            try {
+                mainloop();
+            } catch (Exception ex) {
+                emergencyLog.error("Unexpected exit from LogDNA Appender", ex);
+            }
+        }
+
+        private void mainloop() {
             LogDNABulkAppender parent = LogDNABulkAppender.this;
             // loop while the parent is started
 

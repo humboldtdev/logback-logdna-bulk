@@ -4,7 +4,7 @@
 
   <groupId>com.github.humboldtdev</groupId>
   <artifactId>logback-logdna-bulk</artifactId>
-  <version>1.1</version>
+  <version>1.2-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>logback-logdna-bulk</name>
